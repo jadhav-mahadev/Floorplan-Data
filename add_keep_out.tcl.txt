@@ -1,0 +1,1 @@
+set_keepout_margin -type hard -outer {0.5 1.652 0.5 1.652} -all_macros

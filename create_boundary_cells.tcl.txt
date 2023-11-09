@@ -1,0 +1,20 @@
+#set bbox {{5.000 5.031} {861.374 6.672}}
+
+proc create_boundary_cells {llx lly urx ury} {
+	
+	global i
+	if {![info exists i]} {
+		set i 0
+	}
+	set new_llx $llx
+	while {$new_llx <= $urx} {
+		
+		puts "creating bounary cell BoundaryCell$i.."
+		create_cell BoundaryCell$i SHFILL3_HVT
+		puts "Moving BoundaryCell$i to location: $new_llx, $lly..."
+		move_object -to "$new_llx $lly" [get_cells -all BoundaryCell$i]
+		set new_llx [expr $new_llx + 0.456]
+		set i [expr $i + 1] 
+	}
+
+} 
