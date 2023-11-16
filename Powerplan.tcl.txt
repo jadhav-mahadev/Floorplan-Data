@@ -1,0 +1,17 @@
+# Making logical connection
+derive_pg_connection -power_net {VDD} -ground_net {VSS} -power_pin {VDD} -ground_pin {VSS} -reconnect
+derive_pg_connection -power_net {VDD} -ground_net {VSS} -tie
+
+# Creating power straps
+create_power_straps -direction horizontal -start_at 5 -num_placement_strap 1200 -increment_x_or_y 8 -nets {VDD VSS} -layer M7 -width 0.5 -keep_floating_wire_pieces
+create_power_straps -direction vertical -start_at 5 -num_placement_strap 1200 -increment_x_or_y 5 -nets {VDD VSS} -layer M8 -width 0.5 -keep_floating_wire_pieces
+
+# Creating Standard cells PG pins
+preroute_standard_cells -route_pins_on_layer M1 -fill_empty_rows -do_not_route_over_macros -route_type {P/G Std. Cell Pin Conn} 
+
+# Verify PG Nets
+verify_pg_nets -std_cell_pin_connection ignore -macro_pin_connection ignore -pad_pin_connection ignore -nets {VDD VSS} -error_cell pg_net
+
+# Save the mw cel
+save_mw_cel -as ${DESIGN}_power_routed
+save_mw_cel
